@@ -1,0 +1,31 @@
+.search-container{
+  margin-bottom:20px;
+}
+
+.search-container input{
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:5px;
+}
+
+.category-filter{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.category-filter button{
+  padding:10px 15px;
+  border:none;
+  background:#2874f0;
+  color:white;
+  cursor:pointer;
+  border-radius:5px;
+}
+
+.product-category{
+  color:#666;
+  margin-bottom:10px;
+}

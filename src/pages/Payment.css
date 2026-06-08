@@ -1,0 +1,41 @@
+.payment-page {
+  max-width: 700px;
+  margin: auto;
+  padding: 30px;
+}
+
+.payment-page h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.payment-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.1);
+}
+
+.payment-card label {
+  display: block;
+  margin: 15px 0;
+}
+
+.payment-card input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.pay-btn {
+  width: 100%;
+  padding: 14px;
+  background: #2874f0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 20px;
+  cursor: pointer;
+}
