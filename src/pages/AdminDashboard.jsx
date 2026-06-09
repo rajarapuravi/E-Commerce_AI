@@ -1,140 +1,49 @@
-import React, { useState } from "react";
+import Layout from "../components/layout/Layout";
+import AdminSidebar from "../components/admin/AdminSidebar";
 import "./AdminDashboard.css";
 
 function AdminDashboard() {
 
-  const [products, setProducts] =
-    useState([]);
-
-  const [product, setProduct] =
-    useState({
-      name: "",
-      price: "",
-      image: ""
-    });
-
-  const handleChange = (e) => {
-    setProduct({
-      ...product,
-      [e.target.name]:
-        e.target.value
-    });
-  };
-
-  const addProduct = () => {
-
-    if (
-      !product.name ||
-      !product.price ||
-      !product.image
-    ) {
-      alert("Fill all fields");
-      return;
-    }
-
-    setProducts([
-      ...products,
-      {
-        id: Date.now(),
-        ...product
-      }
-    ]);
-
-    setProduct({
-      name: "",
-      price: "",
-      image: ""
-    });
-  };
-
-  const deleteProduct = (id) => {
-    setProducts(
-      products.filter(
-        item => item.id !== id
-      )
-    );
-  };
-
   return (
-    <div className="admin-page">
+    <Layout>
 
-      <h1>
-        Admin Dashboard
-      </h1>
+      <div className="admin-layout">
 
-      <div className="admin-form">
+        <AdminSidebar />
 
-        <input
-          type="text"
-          name="name"
-          placeholder="Product Name"
-          value={product.name}
-          onChange={handleChange}
-        />
+        <div className="admin-content">
 
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={product.price}
-          onChange={handleChange}
-        />
+          <h1>Admin Dashboard</h1>
 
-        <input
-          type="text"
-          name="image"
-          placeholder="Image URL"
-          value={product.image}
-          onChange={handleChange}
-        />
+          <div className="dashboard-cards">
 
-        <button
-          onClick={addProduct}
-        >
-          Add Product
-        </button>
+            <div className="dashboard-card">
+              <h2>150</h2>
+              <p>Products</p>
+            </div>
 
-      </div>
+            <div className="dashboard-card">
+              <h2>85</h2>
+              <p>Orders</p>
+            </div>
 
-      <div className="product-list">
+            <div className="dashboard-card">
+              <h2>120</h2>
+              <p>Users</p>
+            </div>
 
-        {products.map(item => (
-
-          <div
-            key={item.id}
-            className="admin-card"
-          >
-
-            <img
-              src={item.image}
-              alt={item.name}
-            />
-
-            <h3>
-              {item.name}
-            </h3>
-
-            <p>
-              ₹{item.price}
-            </p>
-
-            <button
-              onClick={() =>
-                deleteProduct(
-                  item.id
-                )
-              }
-            >
-              Delete
-            </button>
+            <div className="dashboard-card">
+              <h2>₹2,50,000</h2>
+              <p>Revenue</p>
+            </div>
 
           </div>
 
-        ))}
+        </div>
 
       </div>
 
-    </div>
+    </Layout>
   );
 }
 

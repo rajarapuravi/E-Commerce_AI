@@ -1,0 +1,20 @@
+.product-form{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  max-width:600px;
+}
+
+.product-form input,
+.product-form textarea{
+  padding:12px;
+  border:1px solid #ddd;
+}
+
+.product-form button{
+  padding:12px;
+  background:#2874f0;
+  color:white;
+  border:none;
+  cursor:pointer;
+}

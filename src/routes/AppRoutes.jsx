@@ -19,6 +19,10 @@ import Checkout from "../pages/Checkout";
 import Payment from "../pages/Payment";
 import OrderSuccess from "../pages/OrderSuccess";
 import AdminDashboard from "../pages/AdminDashboard";
+import AddProduct from "../pages/AddProduct";
+import ManageUsers from "../pages/ManageUsers";
+import ManageOrders from "../pages/ManageOrders";
+import ManageProducts from "../pages/ManageProducts";
 
 function AppRoutes() {
   return (
@@ -33,7 +37,10 @@ function AppRoutes() {
           path="/product/:id"
           element={<ProductDetails />}
         />
-
+<Route
+  path="/admin/products"
+  element={<ManageProducts />}
+/>
         <Route path="/cart" element={<Cart />} />
 
         <Route
@@ -78,6 +85,20 @@ function AppRoutes() {
 <Route
   path="/reset-password"
   element={<ResetPassword />}
+/>
+<Route
+  path="/admin/add-product"
+  element={<AddProduct />}
+/>
+
+<Route
+  path="/admin/users"
+  element={<ManageUsers />}
+/>
+
+<Route
+  path="/admin/orders"
+  element={<ManageOrders />}
 />
 
         <Route path="/orders" element={<Orders />} />

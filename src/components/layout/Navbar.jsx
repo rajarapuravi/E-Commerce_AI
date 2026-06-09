@@ -45,6 +45,9 @@ function Navbar() {
         <Link to="/">
           Home
         </Link>
+        <Link to="/admin">
+  Admin
+</Link>
 
         <Link to="/products">
           Products
@@ -75,9 +78,6 @@ function Navbar() {
         <Link to="/profile">
           Profile
         </Link>
-        <Link to="/admin">
-  Admin
-</Link>
 
       </div>
 

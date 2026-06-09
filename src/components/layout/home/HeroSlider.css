@@ -13,10 +13,11 @@
 
 .hero-content{
   position:absolute;
-  top:50%;
-  left:10%;
+  top:75%;
+  right:5%;
   transform:translateY(-50%);
   color:white;
+
 }
 
 .hero-content h1{

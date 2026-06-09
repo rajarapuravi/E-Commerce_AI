@@ -5,7 +5,7 @@ function HeroSlider() {
   return (
     <div className="hero-slider">
       <img
-        src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
+        src="https://rukminim2.flixcart.com/fk-p-flap/3140/1040/image/60181173b389b01d.png?q=60"
         alt="banner"
       />
 

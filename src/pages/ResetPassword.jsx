@@ -1,30 +1,52 @@
+import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
-import { Link } from "react-router-dom";
-import "./Auth.css";
+import { useNavigate } from "react-router-dom";
 
 function ResetPassword() {
+
+  const [password,setPassword] =
+    useState("");
+
+  const navigate =
+    useNavigate();
+
+  const handleReset = () => {
+
+    localStorage.setItem(
+      "newPassword",
+      password
+    );
+
+    alert(
+      "Password Updated Successfully"
+    );
+
+    navigate("/login");
+  };
+
   return (
     <Layout>
 
       <div className="auth-container">
 
-        <h2>Reset Password</h2>
+        <h2>
+          Reset Password
+        </h2>
 
         <input
           type="password"
           placeholder="New Password"
+          value={password}
+          onChange={(e)=>
+            setPassword(e.target.value)
+          }
         />
 
-        <input
-          type="password"
-          placeholder="Confirm Password"
-        />
-
-        <Link to="/login">
-          <button>
-            Update Password
-          </button>
-        </Link>
+        <button
+          onClick={handleReset}
+        >
+          Update Password
+        </button>
 
       </div>
 

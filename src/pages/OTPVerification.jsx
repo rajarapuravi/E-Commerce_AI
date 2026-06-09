@@ -1,26 +1,69 @@
+import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
-import { Link } from "react-router-dom";
-import "./Auth.css";
+import { useNavigate } from "react-router-dom";
 
 function OTPVerification() {
+
+  const [otp, setOtp] =
+    useState("");
+
+  const navigate =
+    useNavigate();
+
+  const handleVerify = () => {
+
+    const savedOTP =
+      localStorage.getItem(
+        "fakeOTP"
+      );
+
+    if (
+      otp === savedOTP
+    ) {
+
+      alert(
+        "OTP Verified"
+      );
+
+      navigate(
+        "/reset-password"
+      );
+
+    } else {
+
+      alert(
+        "Invalid OTP"
+      );
+
+    }
+  };
+
   return (
     <Layout>
+
       <div className="auth-container">
 
-        <h2>OTP Verification</h2>
+        <h2>
+          OTP Verification
+        </h2>
 
         <input
           type="text"
           placeholder="Enter OTP"
+          value={otp}
+          onChange={(e)=>
+            setOtp(e.target.value)
+          }
         />
 
-        <Link to="/reset-password">
-          <button>
-            Verify OTP
-          </button>
-        </Link>
+        <button
+          onClick={handleVerify}
+        >
+          Verify OTP
+        </button>
 
       </div>
+
     </Layout>
   );
 }

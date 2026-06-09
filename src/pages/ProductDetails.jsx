@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -6,9 +7,13 @@ import products from "../assets/data/products";
 
 import { addToCart } from "../redux/cartSlice";
 import { addWishlist } from "../redux/wishlistSlice";
-import "./ProductDetails.css";
+
 import ProductReviews from "../components/products/ProductReviews";
 import RelatedProducts from "../components/products/RelatedProducts";
+
+import "./ProductDetails.css";
+
+
 function ProductDetails() {
 
   const { id } = useParams();
@@ -19,78 +24,142 @@ function ProductDetails() {
     item => item.id === Number(id)
   );
 
+  const [selectedImage, setSelectedImage] =
+    useState(product.image);
+    
   if (!product) {
     return <h1>Product Not Found</h1>;
   }
 
   return (
-  <Layout>
-    <ProductReviews />
-    <RelatedProducts />
+    <Layout>
 
-    <div className="product-details-container">
+      <div className="product-details-container">
 
-      <div className="product-image">
+
+       <div className="product-image">
+
+  <img
+    src={selectedImage}
+    alt={product.name}
+    className="main-image"
+  />
+
+  <div className="gallery">
+
+    {product.gallery?.map(
+      (img,index) => (
 
         <img
-          src={product.image}
-          alt={product.name}
+          key={index}
+          src={img}
+          alt=""
+          className="thumbnail"
+          onClick={() =>
+            setSelectedImage(img)
+          }
         />
 
-      </div>
+      )
+    )}
 
-      <div className="product-info">
+  </div>
 
-        <h1>{product.name}</h1>
+</div>
 
-        <h2>₹{product.price}</h2>
+        <div className="product-info">
 
-        <h3>Description</h3>
+          <h1>{product.name}</h1>
 
-        <p>{product.description}</p>
+          <h2>₹{product.price}</h2>
 
-        <p>
-          <strong>Category:</strong>
-          {" "}{product.category}
-        </p>
+          <h3>Description</h3>
 
-        <p>
-          <strong>Rating:</strong>
-          ⭐ {product.rating}
-        </p>
+          <p>{product.description}</p>
 
-        <p>
-          <strong>Stock:</strong>
-          {" "}{product.stock}
-        </p>
+          <p>
+            <strong>Category:</strong>
+            {" "}
+            {product.category}
+          </p>
 
-        <div className="btn-group">
+          <p>
+            <strong>Rating:</strong>
+            ⭐ {product.rating}
+          </p>
 
-          <button
-            onClick={() =>
-              dispatch(addToCart(product))
-            }
-          >
-            Add To Cart
-          </button>
+          <p>
+            <strong>Stock:</strong>
+            {" "}
+            {product.stock}
+          </p>
 
-          <button
-            className="wishlist-btn"
-            onClick={() =>
-              dispatch(addWishlist(product))
-            }
-          >
-            Add To Wishlist
-          </button>
+          <h3>Specifications</h3>
+
+<div className="specifications">
+
+  {product.specifications &&
+    Object.entries(
+      product.specifications
+    ).map(
+      ([key,value]) => (
+
+        <div
+          key={key}
+          className="spec-row"
+        >
+
+          <strong>
+            {key}
+          </strong>
+
+          <span>
+            {value}
+          </span>
+
+        </div>
+
+      )
+    )
+  }
+
+</div>
+
+          <div className="btn-group">
+
+            <button
+              onClick={() =>
+                dispatch(
+                  addToCart(product)
+                )
+              }
+            >
+              Add To Cart
+            </button>
+
+            <button
+              className="wishlist-btn"
+              onClick={() =>
+                dispatch(
+                  addWishlist(product)
+                )
+              }
+            >
+              Add To Wishlist
+            </button>
+
+          </div>
 
         </div>
 
       </div>
 
-    </div>
+      <RelatedProducts />
 
-  </Layout>
-);
+      <ProductReviews />
+
+    </Layout>
+  );
 }
 
 export default ProductDetails;
