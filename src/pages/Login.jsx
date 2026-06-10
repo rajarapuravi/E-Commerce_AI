@@ -16,10 +16,15 @@ function Login() {
 
   const handleLogin = () => {
 
-    const user = {
-      name: "RCBK User",
-      email: email,
-    };
+   const user = {
+  name: "Ravi",
+  email: email
+};
+
+localStorage.setItem(
+  "currentUser",
+  JSON.stringify(user)
+);
 
     dispatch(login(user));
 

@@ -17,6 +17,22 @@ function Navbar() {
       state =>
       state.wishlist.wishlistItems
     );
+    const user =
+  JSON.parse(
+    localStorage.getItem("currentUser")
+  );
+
+{
+  user ? (
+    <span>
+      Welcome, {user.name}
+    </span>
+  ) : (
+    <Link to="/login">
+      Login
+    </Link>
+  );
+}
 
   return (
     <nav className="navbar">

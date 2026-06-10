@@ -1,61 +1,99 @@
-import { createSlice } from "@reduxjs/toolkit";
+import React, { useState } from "react";
+import Layout from "../components/layout/Layout";
+import "./Payment.css";
 
-const cartSlice = createSlice({
-  name: "cart",
+function Payment() {
+  const [paymentMethod, setPaymentMethod] = useState("");
 
-  initialState: {
-    cartItems: [],
-  },
+  const handlePayment = () => {
+    if (!paymentMethod) {
+      alert("Please select a payment method");
+      return;
+    }
 
-  reducers: {
-    addToCart: (state, action) => {
-      const existing = state.cartItems.find(
-        (item) => item.id === action.payload.id
-      );
+    alert(`Payment Successful via ${paymentMethod}`);
+  };
 
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        state.cartItems.push({
-          ...action.payload,
-          quantity: 1,
-        });
-      }
-    },
+  return (
+    <Layout>
+      <div className="payment-container">
 
-    removeFromCart: (state, action) => {
-      state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload
-      );
-    },
+        <h1>Select Payment Method</h1>
 
-    increaseQuantity: (state, action) => {
-      const item = state.cartItems.find(
-        (item) => item.id === action.payload
-      );
+        <div className="payment-options">
 
-      if (item) {
-        item.quantity += 1;
-      }
-    },
+          <label>
+            <input
+              type="radio"
+              name="payment"
+              value="Google Pay"
+              onChange={(e) =>
+                setPaymentMethod(e.target.value)
+              }
+            />
+            Google Pay
+          </label>
 
-    decreaseQuantity: (state, action) => {
-      const item = state.cartItems.find(
-        (item) => item.id === action.payload
-      );
+          <label>
+            <input
+              type="radio"
+              name="payment"
+              value="PhonePe"
+              onChange={(e) =>
+                setPaymentMethod(e.target.value)
+              }
+            />
+            PhonePe
+          </label>
 
-      if (item && item.quantity > 1) {
-        item.quantity -= 1;
-      }
-    },
-  },
-});
+          <label>
+            <input
+              type="radio"
+              name="payment"
+              value="Paytm"
+              onChange={(e) =>
+                setPaymentMethod(e.target.value)
+              }
+            />
+            Paytm
+          </label>
 
-export const {
-  addToCart,
-  removeFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-} = cartSlice.actions;
+          <label>
+            <input
+              type="radio"
+              name="payment"
+              value="UPI"
+              onChange={(e) =>
+                setPaymentMethod(e.target.value)
+              }
+            />
+            UPI
+          </label>
 
-export default cartSlice.reducer;
+          <label>
+            <input
+              type="radio"
+              name="payment"
+              value="Cash On Delivery"
+              onChange={(e) =>
+                setPaymentMethod(e.target.value)
+              }
+            />
+            Cash On Delivery
+          </label>
+
+        </div>
+
+        <button
+          className="pay-btn"
+          onClick={handlePayment}
+        >
+          Pay Now
+        </button>
+
+      </div>
+    </Layout>
+  );
+}
+
+export default Payment;

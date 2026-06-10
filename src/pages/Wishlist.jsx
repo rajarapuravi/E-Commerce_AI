@@ -19,8 +19,13 @@ function Wishlist() {
   const dispatch = useDispatch();
 
   const wishlistItems = useSelector(
-    state => state.wishlist.wishlistItems
+    (state) => state.wishlist.wishlistItems
   );
+
+  const handleMoveToCart = (item) => {
+    dispatch(addToCart(item));
+    dispatch(removeWishlist(item.id));
+  };
 
   return (
     <Layout>
@@ -32,15 +37,19 @@ function Wishlist() {
         </h1>
 
         {wishlistItems.length === 0 ? (
+
           <div className="empty-wishlist">
             <h2>Your Wishlist is Empty</h2>
-            <p>Add products to your wishlist.</p>
+            <p>
+              Add products to your wishlist.
+            </p>
           </div>
+
         ) : (
 
           <div className="wishlist-grid">
 
-            {wishlistItems.map(item => (
+            {wishlistItems.map((item) => (
 
               <div
                 key={item.id}
@@ -49,13 +58,21 @@ function Wishlist() {
 
                 <img
                   src={item.image}
-                  alt={item.name}
+                  alt={
+                    item.name ||
+                    item.title ||
+                    "Product"
+                  }
                   className="wishlist-image"
                 />
 
                 <div className="wishlist-content">
 
-                  <h3>{item.name}</h3>
+                  <h3>
+                    {item.name ||
+                      item.title ||
+                      "Product"}
+                  </h3>
 
                   <p className="wishlist-price">
                     ₹{item.price}
@@ -66,7 +83,7 @@ function Wishlist() {
                     <button
                       className="add-cart-btn"
                       onClick={() =>
-                        dispatch(addToCart(item))
+                        handleMoveToCart(item)
                       }
                     >
                       Move To Cart

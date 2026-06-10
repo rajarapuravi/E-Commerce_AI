@@ -4,18 +4,21 @@ import "./Checkout.css";
 
 function Checkout() {
   const cartItems = useSelector(
-    state => state.cart.cartItems
+    (state) => state.cart.cartItems
   );
 
   const [showSuccess, setShowSuccess] =
     useState(false);
+
+  const [paymentMethod, setPaymentMethod] =
+    useState("");
 
   const [formData, setFormData] =
     useState({
       name: "",
       email: "",
       phone: "",
-      address: ""
+      address: "",
     });
 
   const totalPrice = cartItems.reduce(
@@ -27,8 +30,7 @@ function Checkout() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]:
-        e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -48,6 +50,65 @@ function Checkout() {
       alert("Cart is Empty");
       return;
     }
+
+    if (!paymentMethod) {
+      alert("Please select a payment method");
+      return;
+    }
+
+    const user = JSON.parse(
+      localStorage.getItem("currentUser")
+    );
+
+    if (!user) {
+      alert("Please Login First");
+      return;
+    }
+
+    const newOrder = {
+      id: Date.now(),
+
+      product: cartItems
+        .map(
+          (item) =>
+            item.name ||
+            item.title ||
+            "Product"
+        )
+        .join(", "),
+
+      price: totalPrice,
+
+      status: "Processing",
+
+      paymentMethod,
+
+      customerName: formData.name,
+
+      customerEmail: formData.email,
+
+      customerPhone: formData.phone,
+
+      customerAddress: formData.address,
+
+      orderDate:
+        new Date().toLocaleString(),
+    };
+
+    const orderKey =
+      `orders_${user.email}`;
+
+    const existingOrders =
+      JSON.parse(
+        localStorage.getItem(orderKey)
+      ) || [];
+
+    existingOrders.push(newOrder);
+
+    localStorage.setItem(
+      orderKey,
+      JSON.stringify(existingOrders)
+    );
 
     setShowSuccess(true);
   };
@@ -96,19 +157,28 @@ function Checkout() {
 
           <h2>Order Summary</h2>
 
-          {cartItems.map(item => (
+          {cartItems.map((item) => (
+
             <div
               key={item.id}
               className="summary-item"
             >
+
               <span>
-                {item.name} x{item.quantity}
+                {(item.name ||
+                  item.title) +
+                  " x" +
+                  item.quantity}
               </span>
 
               <span>
-                ₹{item.price * item.quantity}
+                ₹
+                {item.price *
+                  item.quantity}
               </span>
+
             </div>
+
           ))}
 
           <hr />
@@ -116,6 +186,82 @@ function Checkout() {
           <h3>
             Total: ₹{totalPrice}
           </h3>
+
+          <h2>Payment Method</h2>
+
+          <div className="payment-options">
+
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="Google Pay"
+                onChange={(e) =>
+                  setPaymentMethod(
+                    e.target.value
+                  )
+                }
+              />
+              Google Pay
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="PhonePe"
+                onChange={(e) =>
+                  setPaymentMethod(
+                    e.target.value
+                  )
+                }
+              />
+              PhonePe
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="Paytm"
+                onChange={(e) =>
+                  setPaymentMethod(
+                    e.target.value
+                  )
+                }
+              />
+              Paytm
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="UPI"
+                onChange={(e) =>
+                  setPaymentMethod(
+                    e.target.value
+                  )
+                }
+              />
+              UPI
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="Cash On Delivery"
+                onChange={(e) =>
+                  setPaymentMethod(
+                    e.target.value
+                  )
+                }
+              />
+              Cash On Delivery
+            </label>
+
+          </div>
 
           <button
             className="place-order-btn"
@@ -129,13 +275,22 @@ function Checkout() {
       </div>
 
       {showSuccess && (
+
         <div className="success-popup">
+
           <h2>
             🎉 Order Placed Successfully!
           </h2>
 
           <p>
-            Thank you for shopping with RCBK.
+            Payment Method:
+            {" "}
+            {paymentMethod}
+          </p>
+
+          <p>
+            Thank you for shopping
+            with RCBK.
           </p>
 
           <button
@@ -145,7 +300,9 @@ function Checkout() {
           >
             OK
           </button>
+
         </div>
+
       )}
 
     </div>
